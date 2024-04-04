@@ -5,7 +5,7 @@
   <title>Remerciements</title>
 </head>
 <body>
-
+    
   <?php
   
   $firstNameErr = $lastNameErr = $emailErr = $phoneErr = $subjectErr = $messageErr = ""; 
@@ -17,9 +17,9 @@
     $data = htmlspecialchars($data);
     return $data;
   }
-
+  
    if ($_SERVER["REQUEST_METHOD"] == "POST") {
-
+        
         if (empty($_POST["firstName"])) {
             $firstNameErr = "Ton prénom doit être renseigné";
         }
@@ -58,9 +58,10 @@
         }
         else {
             $phone = test_input($_POST["phone"]);
-            if (preg_match("/^[0-9]{10}$/", $phone)) {
+            if (!preg_match("/^[0-9]{10}$/", $phone)) {
                 $phoneErr = "Téléphone non valide";
             }
+
         }
 
         if (empty($_POST["subject"])) {
@@ -85,8 +86,14 @@
         echo "<h2> Merci $firstname $name de nous avoir contacté à propos de \"$subject\". </h2>" ;
         echo "<p> Un de nos conseillers vous contactera soit à l'adresse $email ou par téléphone au $phone dans les plus brefs délais pour traiter votre demande :</p> " ;
         echo "<p> $message </p>" ;
-    }
+    }  
 
+    else {
+
+        echo $nameErr . $firstNameErr . $emailErr . $phoneErr . $subjectErr . $messageErr;
+
+    }
+    
      
   ?>
 
